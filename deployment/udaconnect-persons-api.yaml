@@ -31,7 +31,7 @@ spec:
         service: udaconnect-persons-api
     spec:
       containers:
-      - image: moebius5/nd064-udaconnect-persons-api:latest
+      - image: darkphoenix17/nd064-udaconnect-persons-api:latest
         name: udaconnect-persons-api
         imagePullPolicy: Always
         env:
