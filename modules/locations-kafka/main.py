@@ -8,13 +8,14 @@ import location_pb2_grpc
 import logging, sys
 
 from kafka import KafkaProducer
+from grpc_reflection.v1alpha import reflection
 
 TOPIC_NAME = 'locations'
 KAFKA_SERVER = 'kafka:9092'
 
 producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER, value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
-class LocationServicer(location_pb2_grpc.LocationServiceServicer):
+class LocationService(location_pb2_grpc.LocationServiceServicer):
     def Create(self, request, context):
         logger.info("Received new location")
         location_value = {
@@ -41,7 +42,14 @@ logger.addHandler(stdouth)
 
 # Initialize gRPC server
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
-location_pb2_grpc.add_LocationServiceServicer_to_server(LocationServicer(), server)
+location_pb2_grpc.add_LocationServiceServicer_to_server(LocationService(), server)
+
+# enabling reflection service
+SERVICE_NAMES = (
+    location_pb2.DESCRIPTOR.services_by_name['LocationService'].full_name,
+    reflection.SERVICE_NAME,
+)
+reflection.enable_server_reflection(SERVICE_NAMES, server)
 
 
 logger.info("Server starting on port 5005...")
