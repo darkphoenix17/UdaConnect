@@ -7,7 +7,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels: udaconnect-locations-generator
+    matchLabels: 
+      app: udaconnect-locations-generator
   template:
     metadata:
       labels:
