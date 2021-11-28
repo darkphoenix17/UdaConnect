@@ -138,29 +138,31 @@ id  | person_id |                 coordinate                 |    creation_time
 
 ### Verifying it Works
 Once the project is up and running, you should be able to see 7 deployments and 9 services in Kubernetes:
-`kubectl get deployment` and `kubectl get services` - should return:
+`kubectl get po` and `kubectl get svc` - should return:
 ```
-NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
-postgres                         1/1     1            1           21h
-udaconnect-app                   1/1     1            1           14h
-udaconnect-locations2kafka       1/1     1            1           14h
-udaconnect-locations-kafka2db    1/1     1            1           14h
-udaconnect-locations-generator   1/1     1            1           13h
-udaconnect-connections-api       1/1     1            1           13h
-udaconnect-persons-api           1/1     1            1           12h
+NAME                                              READY   STATUS    RESTARTS   AGE
+postgres-5f676c995d-kkzx9                         1/1     Running   0          16h
+kafka-zookeeper-0                                 1/1     Running   0          16h
+kafka-0                                           1/1     Running   1          16h
+udaconnect-app-5cbbcc6784-4dfpf                   1/1     Running   0          12h
+udaconnect-locations-kafka-545d9b86cb-s975z       1/1     Running   0          12h
+udaconnect-persons-api-b49568684-ttvdb            1/1     Running   0          12h
+udaconnect-connections-api-7595bb78c9-h6fq8       1/1     Running   0          12h
+udaconnect-locations-generator-76f6bd5cc7-z9kjz   1/1     Running   0          9h
+udaconnect-locations-kafka2db-684d5d9c9b-mlbwt    1/1     Running   3          12h
 ```
 ```
 NAME                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
-kubernetes                   ClusterIP   10.43.0.1       <none>        443/TCP                      13d
-kafka-zookeeper-headless     ClusterIP   None            <none>        2181/TCP,2888/TCP,3888/TCP   21h
-kafka-zookeeper              ClusterIP   10.43.156.139   <none>        2181/TCP,2888/TCP,3888/TCP   21h
-kafka-headless               ClusterIP   None            <none>        9092/TCP,9093/TCP            21h
-kafka                        ClusterIP   10.43.234.173   <none>        9092/TCP                     21h
-udaconnect-app               NodePort    10.43.56.185    <none>        3000:30000/TCP               21h
-postgres                     NodePort    10.43.10.179    <none>        5432:32078/TCP               15h
-udaconnect-connections-api   NodePort    10.43.43.82     <none>        5000:30002/TCP               14h
-udaconnect-locations2kafka   NodePort    10.43.51.141    <none>        5005:30005/TCP               14h
-udaconnect-persons-api       NodePort    10.43.251.107   <none>        30001:30001/TCP              13h
+kubernetes                   ClusterIP   10.43.0.1       <none>        443/TCP                      17h
+kafka-zookeeper-headless     ClusterIP   None            <none>        2181/TCP,2888/TCP,3888/TCP   16h
+kafka-zookeeper              ClusterIP   10.43.64.29     <none>        2181/TCP,2888/TCP,3888/TCP   16h
+kafka-headless               ClusterIP   None            <none>        9092/TCP,9093/TCP            16h
+kafka                        ClusterIP   10.43.145.164   <none>        9092/TCP                     16h
+postgres                     NodePort    10.43.71.219    <none>        5432:30506/TCP               16h
+udaconnect-app               NodePort    10.43.144.236   <none>        3000:30000/TCP               12h
+udaconnect-connections-api   NodePort    10.43.117.141   <none>        5000:30002/TCP               12h
+udaconnect-locations-kafka   NodePort    10.43.58.197    <none>        5005:30005/TCP               12h
+udaconnect-persons-api       NodePort    10.43.197.244   <none>        30001:30001/TCP              12h
 ```
 
 
